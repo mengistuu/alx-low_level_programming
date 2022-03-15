@@ -1,5 +1,4 @@
 #include "main.h"
-#include <unistd.h>
 
 /**
  * main -  prints _putchar, followed by a new line
@@ -19,4 +18,3 @@ int main(void)
 
 	return (0);
 }
-
