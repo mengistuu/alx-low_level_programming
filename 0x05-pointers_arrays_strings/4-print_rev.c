@@ -5,16 +5,16 @@
  * Return: void
 */
 
-void print_rev(char* s)
+void print_rev(char *s)
 {
-	int i = 0;
-	while (s[i])
-		i++;
+int i = 0;
+while (s[i])
+	i++;
 
-	while (i--)
-	{
-		_putchar(s[i]);
-	}
-	_putchar('\n');
+while (i--)
+{
+	_putchar(s[i]);
+}
+_putchar('\n');
 
 }
