@@ -1,97 +1,51 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
-/**
- *word_len - finds the length of a word
- *@str:string to test
- *
- *Return:int
- */
-int word_len(char *str)
-{
-	int i = 0, len = 0;
 
-	while (*(str + i) && *(str + i) != ' ')
-	{
-		len++;
-		i++;
-	}
-	return (len);
-}
 /**
- *word_count - counts the number of words
+ * argstostr - Concatenates all the arguments of the program
  *
- *@str:input
+ * @ac: Argument total count
  *
- *Return:(no. of words)
+ * @av: Pointer to arguments
  *
+ * Retunr: Pointer to concatenated string (SUCCESS) or
+ * NULL if @ac == 0 or @av == NULL (FAILURE) or
+ * NULL if if insufficient memory was available (FAILURE)
  */
-int word_count(char *str)
-{
-	int i = 0, len = 0, count = 0;
 
-	for (i = 0; *(str + i); i++)
-	{
-		len++;
-	}
-	for (i = 0; i < len; i++)
-	{
-		if (*(str + i) != ' ')
-		{
-			count++;
-			i += word_len(str + i);
-		}
-	}
-	return (count);
-}
-/**
- *strtow - splits a string into words
- *
- *@str:input
- *
- *Return:0 - success
- *
- */
-char **strtow(char *str)
+char *argstostr(int ac, char **av)
 {
-	int i, words, w, letters, l;
-	char **p;
+	int i, j;
+	int count = 0;
+	int t_count = 0;
+	char *result;
 
-	if (str == NULL || str[0] == '\0')
+	if (ac == 0 || av == NULL)
+		return ('\0');
+
+	for (i = 0; i < ac; i++)
 	{
-		return (NULL);
+		for (j = 0; av[i][j] != '\0'; j++)
+			t_count++;
+
+		t_count++;
 	}
-	words = word_count(str);
-	if (words == 0)
+
+	result = malloc(sizeof(char) * t_count + 1);
+
+	if (result == NULL)
 	{
-		return (NULL);
+		return ('\0');
 	}
-	p = malloc(sizeof(char *) * (words + 1));
-	if (p == NULL)
+
+	for (i = 0; i < ac; i++)
 	{
-		return (NULL);
-	}
-	for (i = 0; i < words; i++)
-	{
-		while (*(str + w) == ' ')
+		for (j = 0; av[i][j] != '\0'; j++)
 		{
-			w++;
+			result[count++] = av[i][j];
 		}
-		letters = word_len(str + w);
-		p[i] = malloc(sizeof(char) * (letters + 1));
-		if (p[i] == NULL)
-		{
-			for (; i >= 0; i--)
-				free(p[i]);
-			free(p);
-			return (NULL);
-		}
-		for (l = 0; l < letters; l++)
-		{
-			p[i][l] = str[w++];
-		}
-		p[i][l] = '\0';
+		result[count++] = '\n';
 	}
-	p[i] = NULL;
-	return (p);
+
+	result[t_count] = '\0';
+	return (result);
 }
